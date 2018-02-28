@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Dimension;
+/*
+ *TÄLLÄ LUOKALLA LUODAAN TALLENNETUN PELIN LATAUSIKKUNA, 
+ *EHKÄ SAMAN LUOKAN ALLE VOISI LAITTAA METODIN JOSSA OLISI TALLENNETUN PELIN LATAUS??
+ */
 
 
 public class Lataaja extends JPanel
