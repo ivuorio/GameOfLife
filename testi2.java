@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.awt.event.KeyEvent;
 
-
+/*
+ *PROJEKTIN LUOKKA JOSTA LÖYTYY MAIN METODI. SISÄLTÄÄ MYÖS PÄÄVALIKON.
+ */
 public class testi2 extends JPanel
                         implements ActionListener {
     /**
@@ -24,9 +26,6 @@ public class testi2 extends JPanel
     public testi2() {
 
       nappi = new JButton("Aloita peli");
-      //b1.setVerticalTextPosition(AbstractButton.CENTER);
-      //b1.setHorizontalTextPosition(AbstractButton.LEADING); //aka LEFT, for left-to-right locales
-      //b1.setMnemonic(KeyEvent.VK_D);
       nappi.setActionCommand("pelaa");
 
       //Kuunnellaan tuleeko napille painalluksia
@@ -38,28 +37,34 @@ public class testi2 extends JPanel
       //tekstikenttä jossa ohjeita
       JLabel teksti = new JLabel("Valitse ladattava aloitus tilanne");
       //sijoitetaan keskelle rutua
-	    teksti.setAlignmentX(Component.CENTER_ALIGNMENT);
-      add(teksti);
+      teksti.setAlignmentX(Component.CENTER_ALIGNMENT);
+      
 
 	    String[] choices = { "ELÄMÄNPELI TÄHTI", "CHOICE 2", "CHOICE 3", "CHOICE 4",
 	                         "CHOICE 5", "LATAA OMA TALLENNUS" };
 
 	    final JComboBox<String> droppi = new JComboBox<String>(choices);
 
-	    droppi.setMaximumSize(droppi.getPreferredSize()); // added code
-	    droppi.setAlignmentX(Component.CENTER_ALIGNMENT);// added code
+	    droppi.setMaximumSize(droppi.getPreferredSize()); 
+	    droppi.setAlignmentX(Component.CENTER_ALIGNMENT);
 	    droppi.setActionCommand("lataus");
 	    droppi.addActionListener(this);
-	    add(droppi);
+	    
 
-      //Add Components to this container, using the default FlowLayout.
+      //Lisätään luodut GUI oliot ikkunaan
+      add(teksti);
+      add(droppi);
       add(nappi);
       label=(String)droppi.getSelectedItem();
             }
-
+	/*
+	*metodi vaihtaa ikkunan otsikkoa, ideana olisi että valikosta valittu aloitus tilanne latautuisi pelilaudalle.
+	*aloitus tilanteet pitäisi luoda ja tiedoston lataaja.
+	*/
     public void actionPerformed(ActionEvent e) {
     	if ("pelaa".equals(e.getActionCommand())) {
     		if (label=="LATAA OMA TALLENNUS"){
+			//Jos on valittu oman pelin tallennus luodaan lataaja olio joka on uusi ikkuna.
     			Lataaja lat =new Lataaja();
     			lat.aja();
     		}
