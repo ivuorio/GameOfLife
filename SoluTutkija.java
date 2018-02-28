@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 
 public class SoluTutkija {
-	//metodi joka etsii ympäröivät elävät solu
+	//metodin pitäisi päivittää solut, ei toimi koska ei voi etsiä päivittettäviä ja päivittää samalla. 
+	//Ensin pitää etsiä ja sitten päivittää...
 	public static void paivitys(){
 		/*for (Solu[] rivi : Peli.solut){
 			for (Solu solu: rivi){
@@ -13,6 +14,7 @@ public class SoluTutkija {
 			
 		}*/
 	}
+	//metodi etsii ympäröivät elävät solut ja palauttaa ne arraylistinä 
 	public static ArrayList<Solu> naapurisolut(Solu s){
 		ArrayList<Solu> naapurit=new ArrayList<Solu>();
 		int omaX=s.annaX();
