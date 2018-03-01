@@ -1,7 +1,6 @@
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,10 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Dimension;
-/*
- *TÄLLÄ LUOKALLA LUODAAN TALLENNETUN PELIN LATAUSIKKUNA, 
- *EHKÄ SAMAN LUOKAN ALLE VOISI LAITTAA METODIN JOSSA OLISI TALLENNETUN PELIN LATAUS??
- */
 
 
 public class Lataaja extends JPanel

@@ -1,4 +1,7 @@
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JFrame;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,12 +20,13 @@ public class Peli {
 
     public static final Dimension koko = new Dimension(leveys, korkeus);
     //mikä hitto tämä on???
-    private static final boolean RUNNING = true;
+    private static boolean RUNNING = true;
     //luodaan solu lista johon voidaan alustaa pelilaudan solut.
     public static final Solu[][] solut = new Solu[solujaPerRivi][solujaPerRivi];
 
     //tähän laudan hallinta metodit
     public Peli(String s) {
+    	
     	//luodaan ikkuna
         JFrame ikkuna = new JFrame(s);
         //asetetaan sen koko  muuttujan koko mukaan
@@ -31,11 +35,10 @@ public class Peli {
         ikkuna.setLocationRelativeTo(null);
         //asetetaan close operaatio niin että ohjelma ei sulkeudu vaan vain ikkuna jossa peli pyörii.
         ikkuna.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //ikkuna.setWindowCommand("lataus");
+        
         ikkuna.setVisible(true);
         
-        Pelilauta lauta = new Pelilauta();
-        ikkuna.add(lauta);
-        lauta.createBufferStrategy(3);
         
         alustaSolut();
         
@@ -50,7 +53,49 @@ public class Peli {
         solut[12][12].asetaElossa(true);
         solut[11][12].asetaElossa(true);
         
-        startGameLoop(lauta);
+        
+        solut[20][11].asetaElossa(true);
+        solut[20][12].asetaElossa(true);
+        solut[20][13].asetaElossa(true);
+        solut[19][13].asetaElossa(true);
+        solut[18][12].asetaElossa(true);
+        
+        final Pelilauta lauta = new Pelilauta(); 
+        //lauta.createBufferStrategy(3);
+        ikkuna.add(lauta);
+        
+        //EI TOIMI VITTU SAATANA PERKELE!!!
+        ikkuna.addWindowListener(new WindowListener() {
+
+            //@Override
+            public void windowClosing(WindowEvent e) {
+                RUNNING=false;
+                System.out.println(RUNNING + "RUNNING vaihdettu");
+            }
+
+            
+            public void windowOpened(WindowEvent e) {}
+
+            
+            public void windowClosed(WindowEvent e) {}
+
+            
+            public void windowIconified(WindowEvent e) {}
+
+            
+            public void windowDeiconified(WindowEvent e) {}
+
+             
+            public void windowActivated(WindowEvent e) {}
+
+             
+            public void windowDeactivated(WindowEvent e) {
+            	RUNNING=false;
+                System.out.println(RUNNING + "RUNNING vaihdettu");
+            }
+
+        });
+        peliSilmukka(lauta);
         
     }
     //metodi alustaa kaikki pelilaudan solut kuolleiksi
@@ -62,21 +107,22 @@ public class Peli {
             }
         }
     }
-    private static void startGameLoop(final Pelilauta canvas) {
+    private static void peliSilmukka(final Pelilauta lauta) {
         Timer timer = new Timer();
-
         if (RUNNING) {
+        	//timer luokan metodi scheduele ottaa parametreinaan TimerTaskin, ajan joka odotetaan enne aloitusta(long), ja ajan joko odotetaan onnistuneen suorituksen jälkeen(long)
             timer.schedule(new TimerTask() {
 
-                @Override
+                //@Override
                 public void run() {
-                    //SoluTutkija.paivitys();
-                    canvas.repaint();
+                    SoluTutkija.paivitys();
+                    lauta.repaint();
                 }
 
-            }, 1, 1);
+            }, 1700, 300);
         }
     }
+    
     //latausmetodi olis tähän aika kova
     
     
