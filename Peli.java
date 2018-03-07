@@ -50,23 +50,6 @@ public class Peli {
         if (alku != null){
         	solut=alku;
         }
-        //NÄMÄ VAIN TESTIKSI JOTEN TILALLE PITÄISI LAITTAA JOKU LATAUS METODI.
-        //*******************************************************************
-        /*solut[10][10].asetaElossa(true);
-        solut[10][11].asetaElossa(true);
-        solut[10][12].asetaElossa(true);
-        solut[11][10].asetaElossa(true);
-        solut[12][10].asetaElossa(true);
-        solut[12][11].asetaElossa(true);
-        solut[12][12].asetaElossa(true);
-        solut[11][12].asetaElossa(true);
-        
-        
-        solut[20][11].asetaElossa(true);
-        solut[20][12].asetaElossa(true);
-        solut[20][13].asetaElossa(true);
-        solut[19][13].asetaElossa(true);
-        solut[18][12].asetaElossa(true);*/
         
         final Pelilauta lauta = new Pelilauta(); 
         
@@ -83,12 +66,15 @@ public class Peli {
         	}
         });
         
-        //lauta.createBufferStrategy(3);
+        //jos pelilauta on konstruktoitu muokattavana ajetaan tämän iffin sisältö jolloin pelilautaa voidaan muokata enne pelaamista ja sen aikana.
         if(piirt){
+        	//luodaan piirtaja luokan mukainene olio
         	final Piirtaja piir = new Piirtaja();
+        	//lisätään ikkunaan nappulat ja pelilauta
         	ikkuna.add(aloitaPeli, BorderLayout.NORTH);
         	ikkuna.add(piir);
         	ikkuna.add(tallennaPeli, BorderLayout.SOUTH);
+        	//lisätään aloita peli näppäimeen action listener sen varalta että joku sitä painaa...
         	aloitaPeli.addActionListener(new ActionListener(){
             	public void actionPerformed(ActionEvent e) {
             		if ("pelaa".equals(e.getActionCommand())){
@@ -98,7 +84,9 @@ public class Peli {
             });
         	
         }
+        // jos pelaulaudasta ei haluttu muokattavaa ajetaan tämä silmukka
         if(!piirt){
+        	//lisätään ikkunaan lauta ja pelin tallennus nappula. pelia alkaa automaattisesti pyöriä, onko tämä paha?
         	ikkuna.add(lauta);
         	ikkuna.add(tallennaPeli, BorderLayout.SOUTH);
         	peliSilmukka(lauta);
@@ -106,11 +94,11 @@ public class Peli {
         
         
         
-        
-        //EI TOIMI VITTU SAATANA PERKELE!!! HÄHÄHÄÄ TOIMII SITTENKIN!
+        //Lisätään ikkunan toimintojen seuraaja
         ikkuna.addWindowListener(new WindowListener() {
 
             //@Override
+        	//jos ikkuna suljetaan asetetaan BREAK jotta peli ei jää pyörimään ja tilanne muutu sillä välin kun ikkuna on kiinni.
             public void windowClosing(WindowEvent e) {
                 BREAK=true;
                 //System.out.println(BREAK + "RUNNING vaihdettu");
@@ -145,31 +133,34 @@ public class Peli {
         for (int x = 0; x < solut.length; x++) {
             for (int y = 0; y < solut[x].length; y++) {
                 if (solut[x][y] == null)
+                	//luodaan taulukkoon uudet solu oliot
                     solut[x][y] = new Solu(x, y);
             }
         }
     }
     private static void peliSilmukka(final Pelilauta lauta) {
-    	//(Peli.ikkuna).add(lauta);
+    	//lähtökohtaisesti BREAK on false jotta luuppi ei katkea
     	BREAK=false;
+    	//luodaan taimer olio
         final Timer timer = new Timer();
+        
         if (RUNNING) {
         	//timer luokan metodi scheduele ottaa parametreinaan TimerTaskin, ajan joka odotetaan enne aloitusta(long), ja ajan joko odotetaan onnistuneen suorituksen jälkeen(long)
             timer.scheduleAtFixedRate(new TimerTask() {
             	
                 //@Override
                 public void run() {
-                    SoluTutkija.paivitys();
-                    lauta.repaint();
+                	//jos BREAK on muutettu true niin katkaistaan pelin pyöriminen
                     if(BREAK) timer.cancel();
+                	//solut päivitetään 
+                    SoluTutkija.paivitys();
+                    //lauta uudelleen maalataan
+                    lauta.repaint();
+                    
                     
                 }
 
             }, 500, 500);
         }
     }
-    
-    //latausmetodi olis tähän aika kova
-    
-    
 }
