@@ -40,32 +40,7 @@ public class Pelilauta extends Canvas {
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
-/*
-public class Pelilauta {
-    
-    public Pelilauta(){
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI(); 
-            }
-        });
-    }
 
-    private static void createAndShowGUI() {
-        System.out.println("Created GUI on EDT? "+
-        SwingUtilities.isEventDispatchThread());
-        JFrame f = new JFrame("Swing Paint Demo");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.add(new MyPanel());
-        f.pack();
-        f.setVisible(true);
-        f.setLocationRelativeTo(null);
-    }
-    
-}
-
-class MyPanel extends JPanel {
-*/
 public class Pelilauta extends JPanel{
     /**
 	 * 

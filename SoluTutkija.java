@@ -46,15 +46,5 @@ public class SoluTutkija {
 		//if (naapurit.size()>0) System.out.println("Naapurit solulle "+omaX+","+omaY+". ");
 		return naapurit;
 	}
-	public static void paivita(){
-		Peli.solut[10][10].asetaElossa(true);
-		Peli.solut[10][11].asetaElossa(true);
-		Peli.solut[10][12].asetaElossa(false);
-		Peli.solut[11][10].asetaElossa(false);
-		Peli.solut[12][10].asetaElossa(true);
-		Peli.solut[12][11].asetaElossa(true);
-		Peli.solut[12][12].asetaElossa(true);
-        Peli.solut[11][12].asetaElossa(true);
-	}
 }
 

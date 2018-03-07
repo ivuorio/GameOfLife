@@ -1,4 +1,88 @@
-import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+//numerosarjan tallentaminen lataaminen tidostoon.
+public class Lataaja {
+	public static void tallenna(Solu[][] solut, String polku){
+		try{
+			FileWriter fileWriter = new FileWriter("tallennus.txt");
+			//jostain syystä suositeltiin että fileWriter laitetaan bufferWriterin sisään
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			
+			//luodaan tallennettavat numerot loopilla
+			for(int x = 0;x<solut.length;x++){
+				for(int y=0;y<solut[x].length;y++){
+					String s;
+					if (solut[x][y].annaElossa()==true){
+						s = "1";
+					}
+					else s = "0";
+					bufferedWriter.write(s);
+					
+					
+				}
+				//uusi rivi täytyy luoda erillisellä komennolla!!
+				bufferedWriter.newLine();
+				
+			}
+			//suljetaan bufferedWriter ettei aiheudu muistivuotoja
+			bufferedWriter.close();
+		}
+		catch(IOException ex){//tiedosto ei ollu kelvollinen
+			System.out.println("Jokin meni pielee!");
+			//tulostetaan missä pinossa homma meni puihin.
+			ex.printStackTrace();
+		}
+	}
+	public static int lueNumerot(String polku){
+		//virheilta välttymiseksi otetaan numerot stringinä ja parsitaan se 
+		String numero;
+		int summa = 0;
+		try{
+			FileReader fileReader = new FileReader(polku);
+			//jälleen käytetään bufferia
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			//while looppaillaan tidostoa kunnes rivi on tyhjä
+			while( (numero = bufferedReader.readLine())!= null){
+				summa=summa+(Integer.parseInt(numero));
+			}
+			bufferedReader.close();
+			
+			return summa;
+			
+		}
+		catch(FileNotFoundException ex) {
+            System.out.println(
+                "Tiedostoa ei löydy '" + 
+                polku + "'"); 
+            return 0;
+		}
+		catch(IOException ex){
+			System.out.println("Jokin meni pieleen!");
+			ex.printStackTrace();
+			return 0;
+		}
+		
+	}
+	/*
+	public static void main(String[] args){
+		//tylsä testailu 
+		kirjoitaNumerot(3, "OOP/numerot.txt");
+		System.out.println("tallennettiin numerot!");
+		int sum = lueNumerot("OOP/numerot.txt");
+		System.out.println("ladattujen numeroiden summa: " + sum);
+	}
+	*/
+
+}
+
+
+
+
+/*import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -15,7 +99,7 @@ public class Lataaja extends JPanel
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	/*private static final long serialVersionUID = 1L;
 	protected JButton b1, b2, b3;
 	String label = "elämämpeli";
 	public Lataaja() {
@@ -44,7 +128,7 @@ public class Lataaja extends JPanel
 	public void actionPerformed(ActionEvent e) {
 		if ("pelaa".equals(e.getActionCommand())) {
 			//try-catch-lause fileReaderiin. Jos polkua ei löydy heitä herjaa!
-			new Peli(label);
+			new Peli(label,true,"");
 		}
 		else{
 		}
@@ -56,7 +140,7 @@ public class Lataaja extends JPanel
 	* this method should be invoked from the 
 	* event-dispatching thread.
 	*/
-	private static void createAndShowLATURI() {
+	/*private static void createAndShowLATURI() {
 	
 		//luodaan uusi ikkuna
 		JFrame frame = new JFrame("ELÄMÄMPELI LATAAJA");
@@ -86,4 +170,4 @@ public class Lataaja extends JPanel
 			}
 		});
 	}
-}
+}*/
