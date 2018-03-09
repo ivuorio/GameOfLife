@@ -1,0 +1,20 @@
+Harjoitustyössä tehtäväksemme valitsimme omavalintaisen pelin ohjelmoinnin. Peliksi valikoitui John Conway’s Game of life. Lähtökohtaisesti peli on hyvin yksinkertainen soluautomaatti jossa solujen arvoa muokkataan deterministesten sääntöjen mukaan. Jotta projektista saatiin riittävän laaja ja olio-ohjelmointia tarpeeksi soveltava, täytyi peliin tehdä myös graaffinen käyttöliittymä.
+
+\section{Ratkaisuperiaate}
+Projektiin lähdimme liikkeelle siten, että ensin mietimme kuinka saamme soluautomaatin toimimaan eli kehitettyä järjestelmän jolla solujen elossa oloa voidaan säädellä Conway:n asetamien sääntöjen mukaan. Lopulta tämän todettiinkin olevan kohtalaisen yksinkertainen tehtävä.
+
+Jo ennen kuin soluautomaattijärjestelmänä toimiva pelin ydin oli käytännössä toteutettu rupesimme pureutumaan graaffiseen käyttöliittymään. Se vaatikin hieman enemmän työtä sillä meillä ei ollu sellaisesta aijempaa kokemusta. Kuitenkin pienen tutkinnan jälkeen päädyimme käyttämään Swing kirjastoa. Saatuamme kehitettyä ikkunajärjestelmän johon saimme piirrettyä haluamiamme kuviota oikeille kohdille, viimesitelimme soluautomaattijärjestelmän, nyt kun sen koiestaminen oli hieman helpompaa. 
+
+Lopuksi peliin tehtiin vielä aloitusvalikko, lataus-, tallennus- ja muokkausmahdollisuudet. 
+
+\section{Ohjelman ja sen osat}
+\subsection{Ongelman mallinnus}
+Pelin ongelman ratkaisussa keskeisiä luokkia on kolme. Ne ovat \texttt { Peli, Solu, SoluTutkija }. Näistä yksinkertaisin on luokka \texttt{ Solu }, jossa määlitellään yksittäisen solun ominaisuudet. Solu tietää oman sijaintinsa eli \texttt{ int x} ja \texttt{ int y} koordinaatit sekä oman elossa olonsa tilanteen \texttt{ boolean elossa}. Näitä ominaisuuksia voidaan halinoida \texttt{ aseta }- metodeilla ja niiden arvot saadaan \texttt{ anna } -metodeilla. Elossa olon hallitsemisella on myös metodi \texttt{ vaihdaElossa()}, jota sovelletaan pelitilanteen muokkaamisessa vähentämään ehtolauseiden määrä koodissa. 
+
+Seuraavaksi perehdymme luokkaa \texttt{ SoluTutkija }, jossa hallitaan solujen elossa oloa. Luokasta löytyy kaksi metodia, \texttt{ paivitus() } ja \texttt{ naapuriSolut() }. \texttt{ naapuriSolut(Solu solu) } metodi palauttaa parametrina annetun solun elossa olevien naapuri solujen määrän. 
+
+Solujen elossa olon tilanne paivitetaan \texttt{paivitys()} metodilla, joka käy läpi kaikki luokan \texttt{Peli} taulukon \texttt{solut} solut ja niiden ympäröivien solujen lukumäärän perusteella sijoittaa ne kolmeen eri kategoriaan: Ne joille ei tehdä mitään(kaksi naapuria: S2), ne jotka asetetaan eloon(3 naapuria: B3, S3) ja ne jotka asetetaan kuolleiksi. Tämä tapahtuu asettamalla soluja kahteen \texttt{ ArrayList} luokan olioon \texttt{asetaEloon} ja \texttt{asetaKuolleeksi}, tai jättällä asettamatta kumpaakaan näistä. Kun kaikki solut on käyty läpi kaikki ArrayListien sisältämät solut asetetaan nimen mukaiseen tilaan. Solut joita ei ole sijoitettu kumpaakaan luokkaan pysyvät muuttamattomina.
+
+Luokassa \texttt{Peli} luodaan jo suurelta osin pelin graafista käyttöliittymää, mutta osittain siellä työstetään myös solujen käyttäytimistä. \texttt{Peli} luokasta löytyy taulukko \texttt{Solu[][] solut} johon kaikki pelin solut on tallennettuna. Sen koko määräytyy parametrin \texttt{int solujaPerRivi} mukaan, sillä pelilauta on päätetty pitää neliön muotoisena. Luokassa on myös metodi \texttt{alustaSolut()} joka alustaa kaikki \texttt{solut} taulukon solut kuolleiksi soluiksi. 
+
+Viimeisenä käsiteltävän metodina on \texttt{peliSilmukka} jolla kasataan yhteen kaikki pelin osat ja pyörittää peliä. Metodissa luodaan \texttt{Timer}-olio ja sen avulla metodilla \texttt{scheduleAtFixedRate}
