@@ -1,7 +1,3 @@
-//package components;
-
-//import javax.swing.AbstractButton;
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -101,7 +97,7 @@ public class testi2 extends JPanel
 	    add(droppi);
 	    add(polku);
 	    add(piirto);
-	    polku.setEnabled(false);
+	    //polku.setEnabled(false);
 	    
 	    add(polku);
 	    lataa.setEnabled(true);
@@ -122,6 +118,7 @@ public class testi2 extends JPanel
     			new Peli(label,muokkaus,solut);
     		}
         }
+    	/*
     	if ("lataus".equals(e.getActionCommand())){
     		if (e.getSource() instanceof JComboBox){
     			JComboBox<String> cb = (JComboBox<String>)e.getSource();
@@ -129,11 +126,12 @@ public class testi2 extends JPanel
     			if (label == "LATAA OMA TALLENNUS") polku.setEnabled(true);
     		}
     		else;
-    	}
+    	}*/
     	if ("lataa".equals(e.getActionCommand())){
     		//lataaja joka toimii FileReaderilla....
-    		//lataaja()
-    		System.out.print(polku.getText());
+    		new Peli(label,muokkaus,Lataaja.laturi(polku.getText()));
+    		
+    		//System.out.print(polku.getText());
     	}
     	
     	else {
@@ -150,7 +148,9 @@ public class testi2 extends JPanel
 
         //luodaan uusi ikkuna
         JFrame frame = new JFrame("ELÄMÄMPELI VALIKKO");
+        //asetetaan sulkemis operaatio
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //ja paikka
         frame.setLocationRelativeTo(null);
 
         //Create and set up the content pane.
@@ -160,14 +160,13 @@ public class testi2 extends JPanel
         newContentPane.setOpaque(true); //content panes must be opaque MUTTA MIKSI?
         frame.setContentPane(newContentPane);
 
-        //Display the window.
+        //Tehdään ikkunansta pienin mahdollinen
         frame.pack();
+        //asetetaan näkyväksi
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();

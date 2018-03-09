@@ -8,10 +8,9 @@ public class SoluTutkija {
 		ArrayList<Solu> asetaKuolleeksi = new ArrayList<Solu>();
 		for (Solu[] rivi : Peli.solut){
 			for (Solu solu: rivi){
-				ArrayList<Solu> naapurisolut = new ArrayList<Solu>();
-				naapurisolut=naapurisolut(solu);
-				if (naapurisolut.size()==2); //System.out.println("ei muuteta"); //S2
-				else if (naapurisolut.size()==3) {asetaEloon.add(solu); } //S3 ja B3
+				int n=naapuriSolut(solu);
+				if (n==2); //System.out.println("ei muuteta"); //S2
+				else if (n==3) {asetaEloon.add(solu); } //S3 ja B3
 				else asetaKuolleeksi.add(solu);
 			}
 			
@@ -24,27 +23,25 @@ public class SoluTutkija {
 		}
 		
 	}
-	public static ArrayList<Solu> naapurisolut(Solu s){
-		ArrayList<Solu> naapurit=new ArrayList<Solu>();
+	public static int naapuriSolut(Solu s){
+		int maara=0;
 		int omaX=s.annaX();
 		int omaY=s.annaY();
-		//System.out.print(" tutkitaan solua"+ omaX +","+omaY );
+		//
 		
 		for(int x=omaX-1; x<=omaX+1; x++){
-			//System.out.print("Tutkitaan riviä"+x );
+			//
 			for (int y=omaY-1;y<=omaY+1;y++){
-				//System.out.print(tytkitaan riviä x );
+				//
 				if (x>=0 && x<Peli.solujaPerRivi && y>=0 && y<Peli.solujaPerRivi &&(x!=omaX || y!=omaY)){
 					if((Peli.solut[x][y]).annaElossa()){
-						naapurit.add(Peli.solut[x][y]);
-						//System.out.println("Solu" +x+","+y+ "lisätty. ");
+						maara++;
 					}
 					
 				}
 			}
 		}
-		//if (naapurit.size()>0) System.out.println("Naapurit solulle "+omaX+","+omaY+". ");
-		return naapurit;
+		return maara;
 	}
 }
 

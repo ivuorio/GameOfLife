@@ -21,9 +21,10 @@ public class Peli {
     public static final int korkeus = leveys;
 
     public static final Dimension koko = new Dimension(leveys, korkeus+10);
-    //mikä hitto tämä on???
+    //
     private static boolean RUNNING = true;
-    private static boolean BREAK = false;
+    //lähtötilanteessa peli on pysäytetty
+    private static boolean BREAK = true;
     private JFrame ikkuna;
     public boolean piirt;
     
@@ -47,21 +48,30 @@ public class Peli {
         
         
         alustaSolut();
+        
         if (alku != null){
         	solut=alku;
         }
-        
+        //luodaan pelilauta olio
         final Pelilauta lauta = new Pelilauta(); 
-        
+        //luodaan nappi josta peli alkaa
         final JButton aloitaPeli = new JButton("Aloita peli");
+        //asetetaan napille commandi.
         aloitaPeli.setActionCommand("pelaa");
+        //toinene nappi tallennukseen
         final JButton tallennaPeli= new JButton("Tallenna peli");
+        //ja sille käsky
         tallennaPeli.setActionCommand("tallenna");
+        
         tallennaPeli.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
         		if ("tallenna".equals(e.getActionCommand())){
-        			Lataaja.tallenna(solut, "");
-        			System.out.print("tallennetaan!");
+        			//keskeytetään peli
+        			BREAK=true;
+        			//Lataaja luokan tallennaNimi metodilla kysytään tallennettavan tiedoston nimi ja sen jälkkeen tallennetaan peli.
+        			Lataaja.tallennusNimi(solut);
+        			//aktivoidaan aloita peli nappula.
+        			aloitaPeli.setEnabled(BREAK);
         		}
         	}
         });
@@ -72,13 +82,16 @@ public class Peli {
         	final Piirtaja piir = new Piirtaja();
         	//lisätään ikkunaan nappulat ja pelilauta
         	ikkuna.add(aloitaPeli, BorderLayout.NORTH);
+        	aloitaPeli.setEnabled(true);
         	ikkuna.add(piir);
         	ikkuna.add(tallennaPeli, BorderLayout.SOUTH);
         	//lisätään aloita peli näppäimeen action listener sen varalta että joku sitä painaa...
         	aloitaPeli.addActionListener(new ActionListener(){
             	public void actionPerformed(ActionEvent e) {
             		if ("pelaa".equals(e.getActionCommand())){
+            			BREAK = false;
             			peliSilmukka(piir);
+            			aloitaPeli.setEnabled(BREAK);
             		}
             	}
             });
@@ -89,6 +102,7 @@ public class Peli {
         	//lisätään ikkunaan lauta ja pelin tallennus nappula. pelia alkaa automaattisesti pyöriä, onko tämä paha?
         	ikkuna.add(lauta);
         	ikkuna.add(tallennaPeli, BorderLayout.SOUTH);
+        	BREAK = false;
         	peliSilmukka(lauta);
         }
         
